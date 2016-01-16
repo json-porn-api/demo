@@ -186,14 +186,14 @@ var jsonPorn = function(){
 		request.advanced = function(value) {
 			// performs a deeper query, also looking for actor nicknames
 			// and including download links for porn entries
-			request.addParameter("advanced", query);
+			request.addParameter("advanced", value);
 			return request;
 		}
 
 		request.fillCount = function(value) {
 			// tries to add results until the desired count is reached,
 			// even if they don't directly match the query
-			request.addParameter("fill", query);
+			request.addParameter("fill", value);
 			return request;
 		}
 
