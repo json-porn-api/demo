@@ -124,11 +124,11 @@
         <div class="row">
           <div class="col s12">
             <nav>
-              <div class="nav-wrapper">
+              <div class="nav-wrapper hoverable">
                 <div class="input-field">
                   <input id="search" type="search">
                   <label for="search"><i class="material-icons">search</i></label>
-                  <i class="material-icons">close</i>
+                  <i class="material-icons" onclick="$('#search').val('')">close</i>
                 </div>
               </div>
             </nav>
@@ -152,7 +152,7 @@
       <div class="section">
         <div class="row">
           <div class="col s12">
-            <div class="api-response" url="">
+            <div class="api-response hoverable" url="">
               {}
             </div>
           </div>

@@ -10,7 +10,7 @@ var cardUi = function(){
 	};
 
 	ui.generateCard = function() {
-		var card = $("<div>", { "class": "card" })
+		var card = $("<div>", { "class": "card hoverable" })
 
 		card.withImage = function(image) {
 			if (card.find(".card-image").length > 0) {
@@ -63,9 +63,12 @@ var cardUi = function(){
 							marginTop = 0 - (newImageHeight - currentImageContainerHeight) / 2
 						}
 
+						marginTop -= 1;
+						marginLeft -= 1;
+
 						var imageElement = imageContainer.find("img");
-						imageElement.width(newImageWidth);
-						imageElement.height(newImageHeight);
+						imageElement.width(newImageWidth + 2);
+						imageElement.height(newImageHeight + 2);
 						imageElement.css({
 							"margin-left" : marginLeft + "px", 
 							"margin-top" : marginTop + "px"
@@ -146,7 +149,22 @@ var cardUi = function(){
 		if (actor.imageKeyIds != null && actor.imageKeyIds.length > 0) {
 			var imageWidth = Math.min(500, $(window).width() / 2);
 			var imageSrc = jsonPorn.getResizedImageUrlById(actor.imageKeyIds[0], imageWidth);
-			var image = $("<img>", { "src": imageSrc });
+			var image = $("<img>", { 
+				"src": imageSrc,
+				"class": "animated"
+			});
+
+			var greyscaled = true;
+			if (greyscaled) {
+				image.addClass("greyscaled-semi");
+				image.hover(function() {
+					image.removeClass("greyscaled-semi");
+				}, function() {
+					image.addClass("greyscaled-semi");
+				});
+			}
+			
+
 			card.withImage(image);
 			card.withImageRatio(3/4);
 		}

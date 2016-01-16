@@ -113,17 +113,9 @@ function renderApiResponse(response) {
 
 function getRandomSearchQuery() {
     var queries = [
-        "Nubiles",
-        "Teen",
-        "Virgin",
-        "Angel",
-        "Abby",
-        "Grey",
-        "Lexi",
-        "Love",
-        "Abby",
-        "Alex",
-        "Lisa"
+        "Nubiles", "Teen", "Virgin", "Angel", "Abby",
+        "Grey", "Lexi", "Allie", "Vanessa", "Sandy",
+        "Love", "Abby", "Alex", "Lisa", "Amy"
     ];
 
     var lastQuery = $("#search").val();
