@@ -14,6 +14,15 @@ var jsonPorn = function(){
 	// Request endpoints
 	var ENDPOINT_API = HOST_MASHAPE;
 	var ENDPOINT_SEARCH = ENDPOINT_API + "search/";
+	var ENDPOINT_IMAGE = HOST_JSON_PORN + "image/";
+
+	// Entry types
+	var ENTRY_TYPE_ACTOR = 1;
+	var ENTRY_TYPE_PORN = 2;
+	var ENTRY_TYPE_DOWNLOAD = 4;
+	var ENTRY_TYPE_PRODUCER = 5;
+	var ENTRY_TYPE_GENRE = 6;
+	var ENTRY_TYPE_HOSTER = 8;
 
 	function log(message) {
 		console.log("JSON Porn API: " + message);
@@ -21,13 +30,16 @@ var jsonPorn = function(){
 
 	var api = {
 		apiKey: null,
-		lastRequestTimestamp: -1
+		lastRequestTimestamp: -1,
 	};
 
 	api.setApiKey = function(apiKey) {
 		api.apiKey = apiKey;
 	}
 
+	/*
+		Requests
+	*/
 	api.request = function(endpoint) {
 		var request = {};
 
@@ -179,6 +191,9 @@ var jsonPorn = function(){
 		return promise;
 	}
 
+	/*
+		Endpoints
+	*/
 	api.searchByQuery = function(query) {
 		var request = api.request(ENDPOINT_SEARCH);
 		request.addParameter("q", query);
@@ -198,6 +213,46 @@ var jsonPorn = function(){
 		}
 
 		return request;
+	}
+
+	/*
+		Result helper
+	*/
+	api.getEntriesFromResponse = function(data, entryType) {
+		var entries = [];
+		var responseEntries = data.content;
+
+		if (responseEntries == null) {
+			return entries;
+		}
+
+		for (var i = 0; i < responseEntries.length; i++) {
+			var entry = responseEntries[i];
+			if (entry.entryType == entryType) {
+				entries.push(entry);
+			}
+		}
+
+		return entries;
+	}
+
+	api.getActorsFromResponse = function(data) {
+		return api.getEntriesFromResponse(data, ENTRY_TYPE_ACTOR);
+	}
+
+	api.getPornFromResponse = function(data) {
+		return api.getEntriesFromResponse(data, ENTRY_TYPE_PORN);
+	}
+
+	/*
+		Convenience helper
+	*/
+	api.getImageUrlById = function(imageKeyId) {
+		return api.getResizedImageUrlById(imageKeyId, "original");
+	}
+
+	api.getResizedImageUrlById = function(imageKeyId, size) {
+		return ENDPOINT_IMAGE + imageKeyId + "/" + size + ".jpg";
 	}
 
 	return api;

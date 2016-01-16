@@ -75,11 +75,11 @@
         </a>
       </li>
 
-      <li class="bold"><a href="#" class="waves-effect waves-teal">About</a></li>
-      <li class="bold"><a href="#" class="waves-effect waves-teal">Getting Started</a></li>
+      <li class="bold"><a href="#" class="waves-effect waves">About</a></li>
+      <li class="bold"><a href="#" class="waves-effect waves">Getting Started</a></li>
       <li class="no-padding">
         <ul class="collapsible collapsible-accordion">
-          <li class="bold"><a class="collapsible-header waves-effect waves-teal">API Endpoints</a>
+          <li class="bold"><a class="collapsible-header waves-effect waves">API Endpoints</a>
             <div class="collapsible-body">
               <ul>
                 <li><a href="#">General</a></li>
@@ -99,7 +99,7 @@
 
       <li class="no-padding">
         <ul class="collapsible collapsible-accordion">
-          <li class="bold"><a class="collapsible-header active waves-effect waves-teal">API Demo</a>
+          <li class="bold"><a class="collapsible-header active waves-effect waves">API Demo</a>
             <div class="collapsible-body">
               <ul>
                 <li class="active"><a href="#">Search</a></li>
@@ -109,7 +109,7 @@
         </ul>
       </li>
 
-      <li class="bold"><a href="#" class="waves-effect waves-teal">Contact</a></li>
+      <li class="bold"><a href="#" class="waves-effect waves">Contact</a></li>
     </ul>
 
   </header>
@@ -122,27 +122,43 @@
 
         <!-- Search bar -->
         <div class="row">
-          <nav>
-            <div class="nav-wrapper">
-              <div class="input-field">
-                <input id="search" type="search">
-                <label for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
+          <div class="col s12">
+            <nav>
+              <div class="nav-wrapper">
+                <div class="input-field">
+                  <input id="search" type="search">
+                  <label for="search"><i class="material-icons">search</i></label>
+                  <i class="material-icons">close</i>
+                </div>
               </div>
-            </div>
-          </nav>
-        </div>
-
-        <!-- Response JSON -->
-        <div class="row">
-          <div class="api-response" url="">
-            {}
+            </nav>
           </div>
         </div>
 
-        <!-- Response entries -->
-
       </div>
+
+      <!-- Response entries -->
+      <div id="api-response-entries" class="section">
+        <div id="actor-entries" class="row">
+
+          <div id="card-wrapper" class="col s12 m6 l4">
+            
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Response JSON -->
+      <div class="section">
+        <div class="row">
+          <div class="col s12">
+            <div class="api-response" url="">
+              {}
+            </div>
+          </div>
+        </div>
+      </div>
+      
 
     </div>
 
@@ -181,6 +197,7 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/rainbowjson.js"></script>
   <script src="js/materialize.js"></script>
+  <script src="js/cardui.js"></script>
   <script src="js/pornapi.js"></script>
   <script src="js/general.js"></script>
   <script src="js/demo.js"></script>

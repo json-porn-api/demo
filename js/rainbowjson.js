@@ -6,7 +6,7 @@
             maxDepth: 0, // maximum depth for recursive printing
             json: null, // json as object or in string format (if empty, html of the DOM object will be used)
             url: null,
-            collapseContent: false,
+            collapseContent: true,
             bgColor: '#e6e6e6' // background color of the div, which will be used for shading
         };
 

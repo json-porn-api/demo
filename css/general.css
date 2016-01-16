@@ -20,6 +20,27 @@ header, main, footer {
 }
 
 /*
+ * Width adjustments because of side-nav
+ */
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 1093px) {
+  .container {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 1193px) {
+  .container {
+    width: 70%;
+  }
+}
+
+/*
  * Flex for sticky footer
  */
 body {
@@ -31,6 +52,19 @@ body {
 main {
   flex: 1 0 auto;
 }
+
+/*
+ * Cards
+ */
+.card-image {
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.card-image img {
+    vertical-align: middle;
+}
+
 
 .icon-block {
   padding: 0 15px;

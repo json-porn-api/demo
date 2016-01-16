@@ -31,6 +31,7 @@ function setupSearchBar() {
         }
     });
     searchBar.on('input', onSearchBarValueChanged);
+    searchBar.on('change', onSearchBarValueSubmitted);
 }
 
 function requestRandomSearchResult() {
@@ -56,7 +57,7 @@ function onSearchBarValueSubmitted() {
 function requestSearchResult(query) {
     // create an API request object
     var request = jsonPorn.searchByQuery(query)
-        .setCount(3) // limit to 3 entries per type (actor, genre, producer, ...)
+        .setCount(4) // limit to 4 entries per type (actor, genre, producer, ...)
         .fillCount(true) // fill with results that don't directly match the query
         .advanced(true); // deeper query, including actor nicknames, porn downloads, ...
     
@@ -64,11 +65,15 @@ function requestSearchResult(query) {
     request.send().then(function(data) {
         console.log(data);
         renderApiRequest(request);
+        renderApiResponse(data);
     }).catch(function(error) {
         console.log(error);
         Materialize.toast("Something went wrong", 5000);
         renderApiRequest(request);
     });
+
+    // prepare result wrapper
+    $("#actor-entries").empty();
 }
 
 function renderApiRequest(request) {
@@ -79,6 +84,33 @@ function renderApiRequest(request) {
     });
 }
 
+function renderApiResponse(response) {
+    $("#actor-entries").empty();
+
+    // add cards for the returned entries
+    var actors = jsonPorn.getActorsFromResponse(response);
+    for (var i = 0; i < actors.length; i++) {
+        try {
+            // create a card
+            var card = cardUi.generateActorCard(actors[i]);
+
+            // create a div that wraps the actor card
+            var cardWrapper = $("<div>", { "class": "col s6 m3 l3" });
+
+            // render the card in the wrapper
+            card.renderIn(cardWrapper);
+
+            // add the wrapper to the actor container
+            $("#actor-entries").append(cardWrapper)
+        } catch (ex) {
+            console.log("Unable to render actor");
+            console.log(ex);
+        }
+    }
+
+    
+}
+
 function getRandomSearchQuery() {
     var queries = [
         "Nubiles",
@@ -86,10 +118,10 @@ function getRandomSearchQuery() {
         "Virgin",
         "Angel",
         "Abby",
-        "Black",
-        "Cute",
+        "Grey",
+        "Lexi",
+        "Love",
         "Abby",
-        "Beauty",
         "Alex",
         "Lisa"
     ];
