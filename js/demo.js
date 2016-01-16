@@ -1,3 +1,7 @@
+// CAUTION: This api key will be invalidated in random intervals.
+// Get a free api key for your own project from: https://market.mashape.com/steppschuh/json-porn
+var DEMO_API_KEY = "yr5GZAQe5DmshVbMYpWvI2yXAk9Qp1fY3cAjsnbQumq1kB7jhL";
+
 (function($){
     $(function(){
 
@@ -10,6 +14,11 @@
 
 function setupPornApi() {
     var apiKey = getUrlParam("apiKey");
+    if (apiKey == null) {
+        console.log("CAUTION: Using demo API key. This key will be invalidated in random intervals. " + 
+            "Get a free api key for your own project from: https://market.mashape.com/steppschuh/json-porn");
+        apiKey = DEMO_API_KEY;
+    }
     jsonPorn.setApiKey(apiKey);
 }
 
@@ -47,13 +56,9 @@ function onSearchBarValueSubmitted() {
 function requestSearchResult(query) {
     // create an API request object
     var request = jsonPorn.searchByQuery(query)
-        .setCount(3) // limit to 3 entries per type (actor, genre, ...)
-        .onSuccess(function(data) {
-            // optional: handle data here or in promise
-        })
-        .onError(function(error) {
-            // optional: handle error here or in promise
-        });
+        .setCount(3) // limit to 3 entries per type (actor, genre, producer, ...)
+        .fillCount(true) // fill with results that don't directly match the query
+        .advanced(true); // deeper query, including actor nicknames, porn downloads, ...
     
     // send the request and use the returned promise
     request.send().then(function(data) {
@@ -80,14 +85,13 @@ function getRandomSearchQuery() {
         "Teen",
         "Virgin",
         "Angel",
-        "Anal",
+        "Abby",
         "Black",
         "Cute",
         "Abby",
         "Beauty",
-        "Red",
         "Alex",
-        "Cock"
+        "Lisa"
     ];
 
     var lastQuery = $("#search").val();
@@ -95,7 +99,7 @@ function getRandomSearchQuery() {
 
     do {
         newQuery = queries[Math.floor(Math.random() * queries.length)];
-    } while (newQuery === lastQuery);
+    } while (newQuery == lastQuery);
 
     return newQuery;
 }

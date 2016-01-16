@@ -6,6 +6,7 @@
             maxDepth: 0, // maximum depth for recursive printing
             json: null, // json as object or in string format (if empty, html of the DOM object will be used)
             url: null,
+            collapseContent: false,
             bgColor: '#e6e6e6' // background color of the div, which will be used for shading
         };
 
@@ -137,7 +138,7 @@
                     }
                     else{
                         html += ' <a href="javascript:void(0)" onclick="$(this).next(\'span\').toggle();" class="rainbowToggle">&raquo;</a> ';
-                        if (property == "content") {
+                        if (this.options.collapseContent && property == "content") {
                             html += '<span class="rainbowArrayCollapsed" style="background-color: '+this.shadeColor(this.options.bgColor, this.depth)+'">';
                         } else {
                             html += '<span class="rainbowArray" style="background-color: '+this.shadeColor(this.options.bgColor, this.depth)+'">';

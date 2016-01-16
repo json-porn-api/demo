@@ -3,7 +3,7 @@ var jsonPorn = function(){
 	// Website (for displaying links)
 	var HOST_JSON_PORN = "http://json-porn.com/";
 
-	// Mashape (use for API requests)
+	// Mashape (for API requests)
 	var MASHAPE_VERSION = 1;
 	var HOST_MASHAPE = "https://steppschuh-json-porn-v" + MASHAPE_VERSION + ".p.mashape.com/";
 	
@@ -15,14 +15,14 @@ var jsonPorn = function(){
 	var ENDPOINT_API = HOST_MASHAPE;
 	var ENDPOINT_SEARCH = ENDPOINT_API + "search/";
 
+	function log(message) {
+		console.log("JSON Porn API: " + message);
+	}
+
 	var api = {
 		apiKey: null,
 		lastRequestTimestamp: -1
 	};
-
-	function log(message) {
-		console.log("JSON Porn API: " + message);
-	}
 
 	api.setApiKey = function(apiKey) {
 		api.apiKey = apiKey;
@@ -181,66 +181,22 @@ var jsonPorn = function(){
 
 	api.searchByQuery = function(query) {
 		var request = api.request(ENDPOINT_SEARCH);
-
 		request.addParameter("q", query);
 
-		return request;
-	}
-
-	api.getAllUsers = function() {
-		var request = api.request("user/get/all/");
-		return request;
-	}
-
-	api.getDataSets = function(sensorType, includeEntries, startTimestamp, endTimestamp) {
-		var request = api.request("dataset/get/");
-
-		// add default params
-		request.addParameter("includeEntries", "false");
-		request.addParameter("startTimestamp", 0);
-		request.addParameter("endTimestamp", new Date());
-
-		// overwrite params with passed arguments (may be null)
-		request.addParameter("sensorType", sensorType);
-		request.addParameter("includeEntries", includeEntries ? "true" : "false");
-		request.addParameter("startTimestamp", startTimestamp);
-		request.addParameter("endTimestamp", endTimestamp);
-
-		request.fromSensor = function(sensorType) {
-			request.addParameter("sensorType", sensorType);
+		request.advanced = function(value) {
+			// performs a deeper query, also looking for actor nicknames
+			// and including download links for porn entries
+			request.addParameter("advanced", query);
 			return request;
 		}
 
-		request.since = function(startDate) {
-			if (startDate instanceof Date) {
-				request.startTimestamp = startDate.getTime();
-			} else {
-				request.startTimestamp = startDate;
-			}
-			request.addParameter("startTimestamp", request.startTimestamp);
+		request.fillCount = function(value) {
+			// tries to add results until the desired count is reached,
+			// even if they don't directly match the query
+			request.addParameter("fill", query);
 			return request;
 		}
 
-		request.until = function(endDate) {
-			if (endDate instanceof Date) {
-				request.endTimestamp = endDate.getTime();
-			} else {
-				request.endTimestamp = endDate;
-			}
-			request.addParameter("endTimestamp", request.endTimestamp);
-			return request;
-		}
-
-		request.withEntries = function() {
-			request.addParameter("includeEntries", "true");
-			return request;
-		}
-
-		request.withoutEntries = function() {
-			request.addParameter("includeEntries", "false");
-			return request;
-		}
-		
 		return request;
 	}
 
