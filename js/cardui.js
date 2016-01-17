@@ -55,12 +55,12 @@ var cardUi = function(){
 							// fit height
 							var newImageWidth = Math.ceil(currentImageContainerHeight * imageRatio);
 							var newImageHeight = currentImageContainerHeight;
-							marginLeft = (newImageWidth - currentImageContainerWidth) / 2;
+							marginLeft = 0 - (newImageWidth - currentImageContainerWidth) / 2;
 						} else {
 							// fit width
 							var newImageWidth = currentImageContainerWidth;
 							var newImageHeight = Math.ceil(currentImageContainerWidth / imageRatio);
-							marginTop = 0 - (newImageHeight - currentImageContainerHeight) / 2
+							marginTop = 0 - (newImageHeight - currentImageContainerHeight) / 2;
 						}
 
 						marginTop -= 1;
@@ -171,9 +171,38 @@ var cardUi = function(){
 
 		var content = $("<p>").html(actor.name);
 		card.withContent(content);
-		
-		//var action = $("<a>", { "href": "images/logo.jpg" }).html("Action");
-		//card.withActions(action);
+
+		return card;
+	}
+
+	ui.generatePornCard = function(porn) {
+		var card = ui.generateCard()
+
+		if (porn.imageKeyIds != null && porn.imageKeyIds.length > 0) {
+			var imageWidth = Math.min(500, $(window).width() / 2);
+			var imageSrc = jsonPorn.getResizedImageUrlById(porn.imageKeyIds[0], imageWidth);
+			var image = $("<img>", { 
+				"src": imageSrc,
+				"class": "animated"
+			});
+
+			var greyscaled = true;
+			if (greyscaled) {
+				image.addClass("greyscaled-semi");
+				image.hover(function() {
+					image.removeClass("greyscaled-semi");
+				}, function() {
+					image.addClass("greyscaled-semi");
+				});
+			}
+			
+
+			card.withImage(image);
+			card.withImageRatio(3/2);
+		}
+
+		var content = $("<p>", { "class": "truncate" }).html(porn.name);
+		card.withContent(content);
 
 		return card;
 	}

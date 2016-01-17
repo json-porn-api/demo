@@ -57,7 +57,7 @@ function onSearchBarValueSubmitted() {
 function requestSearchResult(query) {
     // create an API request object
     var request = jsonPorn.searchByQuery(query)
-        .setCount(4) // limit to 4 entries per type (actor, genre, producer, ...)
+        .setCount(10) // limit to 10 entries per type (actor, genre, producer, ...)
         .fillCount(true) // fill with results that don't directly match the query
         .advanced(true); // deeper query, including actor nicknames, porn downloads, ...
     
@@ -72,8 +72,11 @@ function requestSearchResult(query) {
         renderApiRequest(request);
     });
 
-    // prepare result wrapper
-    $("#actor-entries").empty();
+    // clear previous results
+    renderApiResponse(null);
+
+    // track analytics event
+    _gaq.push(['_trackEvent', 'demo', 'search', query]);
 }
 
 function renderApiRequest(request) {
@@ -85,37 +88,67 @@ function renderApiRequest(request) {
 }
 
 function renderApiResponse(response) {
-    $("#actor-entries").empty();
-
     // add cards for the returned entries
     var actors = jsonPorn.getActorsFromResponse(response);
-    for (var i = 0; i < actors.length; i++) {
+    renderActors(actors);
+
+    var porn = jsonPorn.getPornFromResponse(response);
+    renderPorn(porn);
+}
+
+function renderActors(actors) {
+    $("#actor-entries").empty();
+    var count = 0;
+    for (var i = 0; i < actors.length && count < 4; i++) {
         try {
             // create a card
             var card = cardUi.generateActorCard(actors[i]);
 
-            // create a div that wraps the actor card
+            // create a div that wraps the card
             var cardWrapper = $("<div>", { "class": "col s6 m3 l3" });
 
             // render the card in the wrapper
             card.renderIn(cardWrapper);
 
             // add the wrapper to the actor container
-            $("#actor-entries").append(cardWrapper)
+            $("#actor-entries").append(cardWrapper);
+            count++;
         } catch (ex) {
             console.log("Unable to render actor");
             console.log(ex);
         }
     }
+}
 
-    
+function renderPorn(porn) {
+    $("#porn-entries").empty();
+    var count = 0;
+    for (var i = 0; i < porn.length && count < 6; i++) {
+        try {
+            // create a card
+            var card = cardUi.generatePornCard(porn[i]);
+
+            // create a div that wraps the card
+            var cardWrapper = $("<div>", { "class": "col s6 m4 l4" });
+
+            // render the card in the wrapper
+            card.renderIn(cardWrapper);
+
+            // add the wrapper to the actor container
+            $("#porn-entries").append(cardWrapper);
+            count++;
+        } catch (ex) {
+            console.log("Unable to render porn");
+            console.log(ex);
+        }
+    }
 }
 
 function getRandomSearchQuery() {
     var queries = [
-        "Nubiles", "Teen", "Virgin", "Angel", "Abby",
-        "Grey", "Lexi", "Allie", "Vanessa", "Sandy",
-        "Love", "Abby", "Alex", "Lisa", "Amy"
+        "Nubiles", "Teen", "Virgin", "Angel", "Abby", "Olivia", "Cum",
+        "Grey", "Lexi", "Allie", "Rachel", "Bang", "Cherry", "P.O.V", "Housewife",
+        "Love", "Abby", "Alex", "Lisa", "Amy", "Kate", "Young", "MILF"
     ];
 
     var lastQuery = $("#search").val();

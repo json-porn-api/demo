@@ -82,6 +82,10 @@ var jsonPorn = function(){
 			return request;
 		}
 
+		request.invalidateCache = function(value) {
+			return request.addParameter("invalidateCache", value);
+		}
+
 		request.setCount = function(value) {
 			return request.addParameter("count", value);
 		}
@@ -220,11 +224,12 @@ var jsonPorn = function(){
 	*/
 	api.getEntriesFromResponse = function(data, entryType) {
 		var entries = [];
-		var responseEntries = data.content;
 
-		if (responseEntries == null) {
+		if (data == null || data.content == null) {
 			return entries;
 		}
+
+		var responseEntries = data.content;
 
 		for (var i = 0; i < responseEntries.length; i++) {
 			var entry = responseEntries[i];
@@ -242,6 +247,14 @@ var jsonPorn = function(){
 
 	api.getPornFromResponse = function(data) {
 		return api.getEntriesFromResponse(data, ENTRY_TYPE_PORN);
+	}
+
+	api.getProducersFromResponse = function(data) {
+		return api.getEntriesFromResponse(data, ENTRY_TYPE_PRODUCER);
+	}
+
+	api.getGenresFromResponse = function(data) {
+		return api.getEntriesFromResponse(data, ENTRY_TYPE_GENRE);
 	}
 
 	/*
