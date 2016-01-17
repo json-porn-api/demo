@@ -2,8 +2,10 @@
 The JSON Porn API will serve movies, clips, picture galleries and siterips of adult content. Be it through streams, torrents or direct downloads from well known file hosters. [Learn more](http://json-porn.com).
 
 ## Demo website
-This repository serves a sample website that shows how the API can be used. You can try it out at:
-http://json-porn-api.github.io/demo/
+This repository serves a sample website that shows how the API can be used. May not be safe for work.
+Live version: http://json-porn-api.github.io/demo/
+
+![Demo website screenshot](http://json-porn-api.github.io/demo/images/github_cover.jpg "Demo website screenshot")
 
 ## API Usage
 You can call the API directly as specified in the [documentation](https://market.mashape.com/steppschuh/json-porn), but you can also use the handy JavaScript library ([pornapi.js](https://github.com/json-porn-api/demo/blob/gh-pages/js/pornapi.js)) included in this repository.
@@ -70,7 +72,7 @@ statusMessage | String | Holds "OK" or an error message
 lastUpdated | Timestamp | Indicates when the response was generated
 content | JSON Array | Holds the response objects, if any
 
-Note about the `lastUpdated` timestamp: A response might have been generated before you've sent your request, because the API returned a cached response. To force a new response, call `request.invalidateCache(true)` before sending your request. Cache control will be ignored for requests from free users, though.
+> Note about the `lastUpdated` timestamp: A response might have been generated before you've sent your request, because the API returned a cached response. To force a new response, call `request.invalidateCache(true)` before sending your request. Cache control will be ignored for requests from free users, though.
 
 ## Create stuff
 If you're missing some endpoints or features, please request them. I'd love to hear about whatever you build using the API, so feel free to [get in touch](http://steppschuh.net).
