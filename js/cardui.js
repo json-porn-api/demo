@@ -164,6 +164,15 @@ var cardUi = function(){
 				});
 			}
 			
+			var blurred = false;
+			if (blurred) {
+				image.addClass("blurred");
+				image.hover(function() {
+					image.removeClass("blurred");
+				}, function() {
+					image.addClass("blurred");
+				});
+			}
 
 			card.withImage(image);
 			card.withImageRatio(3/4);
@@ -196,6 +205,15 @@ var cardUi = function(){
 				});
 			}
 			
+			var blurred = false;
+			if (blurred) {
+				image.addClass("blurred");
+				image.hover(function() {
+					image.removeClass("blurred");
+				}, function() {
+					image.addClass("blurred");
+				});
+			}
 
 			card.withImage(image);
 			card.withImageRatio(3/2);
