@@ -39,9 +39,11 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+
 </head>
 
 <body>
+
   <header>
 
     <!-- Top navigation-->
@@ -118,9 +120,8 @@
 
     <div class="container">
 
-      <div class="section" id="search-section">
-
-        <!-- Search bar -->
+      <!-- Search bar -->
+      <div class="section">
         <div class="row">
           <div class="col s12">
             <nav>
@@ -134,17 +135,19 @@
             </nav>
           </div>
         </div>
-
       </div>
 
       <!-- Response entries -->
       <div id="api-response-entries" class="section">
+
         <div id="actor-entries" class="row">
           <!-- Filled at runtime -->
         </div>
+
         <div id="porn-entries" class="row">
           <!-- Filled at runtime -->
         </div>
+        
       </div>
 
       <!-- Response JSON -->
@@ -158,18 +161,20 @@
         </div>
       </div>
       
-
     </div>
 
   </main>
 
+  <!-- Footer -->
   <footer class="page-footer">
     <div class="container">
       <div class="row">
+
         <div class="col l6 s12">
           <h5 class="white-text">What's JSON Porn?</h5>
           <p class="grey-text text-lighten-4">Our indexer automatically crawls known porn sites and extracts its (valuable) data. This data can be requested through API calls and will be returned as beautiful JSON responses. The JSON Porn API allows you to build sites and applications based on the latest adult content available.</p>
         </div>
+
         <div class="col l3 s12">
           <h5 class="white-text">API Links</h5>
           <ul>
@@ -180,8 +185,9 @@
         </div>
         
         <div class="col l3 s12">
-
+          <!-- TODO: add more links -->
         </div>
+
       </div>
     </div>
     <div class="footer-copyright">
@@ -190,7 +196,6 @@
       </div>
     </div>
   </footer>
-
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -202,4 +207,5 @@
   <script src="js/demo.js"></script>
 
   </body>
+
 </html>

@@ -134,7 +134,7 @@ function renderPorn(porn) {
             // render the card in the wrapper
             card.renderIn(cardWrapper);
 
-            // add the wrapper to the actor container
+            // add the wrapper to the porn container
             $("#porn-entries").append(cardWrapper);
             count++;
         } catch (ex) {
