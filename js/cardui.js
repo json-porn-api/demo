@@ -17,7 +17,7 @@ var cardUi = function(){
 				return card;
 			}
 
-			var imageContainer = $("<div>", { "class": "card-image" })
+			var imageContainer = $("<div>", { "class": "card-image invisible" })
 			imageContainer.append(image);
 			imageContainer.prependTo(card);
 
@@ -86,6 +86,7 @@ var cardUi = function(){
 						var image = new Image();
 						image.onload = function(){
 							adjustImageDimensions(image.width, image.height);
+							animationUi.fadeIn(imageContainer);
 						}
 						image.src = imageElement.attr("src");
 					}
@@ -95,8 +96,6 @@ var cardUi = function(){
 
 				$(window).resize(card.resizeImageContainer);
 			}
-
-			
 
 			return card;
 		}

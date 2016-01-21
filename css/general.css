@@ -47,6 +47,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background-color: #fcfcfc;
 }
 
 main {
@@ -104,6 +105,10 @@ main {
   transition: all 500ms ease-in-out;
 }
 
+.invisible {
+  opacity: 0;
+}
+
 /*
  * Cards
  */
@@ -123,4 +128,24 @@ main {
 
 .icon-block .material-icons {
 	font-size: inherit;
+}
+
+/*
+ * Color adjustments
+ */
+.tabs .tab a:hover {
+  color: #455A64;
+}
+
+.tabs .tab.disabled a {
+  color: #CFD8DC;
+  cursor: default;
+}
+
+.tabs .indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: #607D8B;
+  will-change: left, right;
 }

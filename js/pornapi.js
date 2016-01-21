@@ -14,6 +14,9 @@ var jsonPorn = function(){
 	// Request endpoints
 	var ENDPOINT_API = HOST_MASHAPE;
 	var ENDPOINT_SEARCH = ENDPOINT_API + "search/";
+	var ENDPOINT_ACTORS = ENDPOINT_API + "actors/";
+	var ENDPOINT_PORN = ENDPOINT_API + "porn/";
+	var ENDPOINT_PRODUCERS = ENDPOINT_API + "producer/";
 	var ENDPOINT_IMAGE = HOST_JSON_PORN + "image/";
 
 	// Entry types
@@ -23,6 +26,18 @@ var jsonPorn = function(){
 	var ENTRY_TYPE_PRODUCER = 5;
 	var ENTRY_TYPE_GENRE = 6;
 	var ENTRY_TYPE_HOSTER = 8;
+
+	// Porn types
+	var PORN_TYPE_UNKNOWN = 1;
+	var PORN_TYPE_CLIP = 2;
+	var PORN_TYPE_PHOTOS = 3;
+	var PORN_TYPE_FULL_MOVIE = 4;
+
+	// Download types
+	var DOWNLOAD_TYPE_UNKNOWN = 1;
+	var DOWNLOAD_TYPE_STREAM = 2;
+	var DOWNLOAD_TYPE_TORRENT = 3;
+	var DOWNLOAD_TYPE_FILE = 4;
 
 	function log(message) {
 		console.log("JSON Porn API: " + message);
@@ -92,6 +107,10 @@ var jsonPorn = function(){
 
 		request.setOffset = function(value) {
 			return request.addParameter("offset", value);
+		}
+
+		request.includeDownloads = function(value) {
+			return request.addParameter("includeDownloads", value);
 		}
 
 		request.onSuccess = function(callback) {
@@ -219,8 +238,71 @@ var jsonPorn = function(){
 		return request;
 	}
 
+	api.getPorn = function() {
+		var request = api.request(ENDPOINT_PORN);
+
+		request.withEntryId = function(value) {
+			request.addParameter("entryId", value);
+			return request;
+		}
+
+		request.withProducerId = function(value) {
+			request.addParameter("producerId", value);
+			return request;
+		}
+
+		return request;
+	}
+
+	api.getActros = function() {
+		var request = api.request(ENDPOINT_ACTORS);
+
+		request.withEntryId = function(value) {
+			request.addParameter("actorId", value);
+			return request;
+		}
+
+		request.withName = function(value) {
+			request.addParameter("actorName", value);
+			return request;
+		}
+
+		return request;
+	}
+
+	api.getProducers = function() {
+		var request = api.request(ENDPOINT_PRODUCERS);
+
+		request.withEntryId = function(value) {
+			request.addParameter("producerId", value);
+			return request;
+		}
+
+		request.withName = function(value) {
+			request.addParameter("producerName", value);
+			return request;
+		}
+
+		request.sortByDate = function() {
+			request.addParameter("sort", "date");
+			return request;
+		}
+
+		request.sortByEntryCount = function() {
+			request.addParameter("sort", "count");
+			return request;
+		}
+
+		request.sortByName = function() {
+			request.addParameter("sort", "alphabetical");
+			return request;
+		}
+
+		return request;
+	}
+
 	/*
-		Result helper
+		Response helper
 	*/
 	api.getEntriesFromResponse = function(data, entryType) {
 		var entries = [];
@@ -255,6 +337,70 @@ var jsonPorn = function(){
 
 	api.getGenresFromResponse = function(data) {
 		return api.getEntriesFromResponse(data, ENTRY_TYPE_GENRE);
+	}
+
+	/*
+		Porn helper
+	*/
+	api.filterPorn = function(porn) {
+		var filter = {};
+
+		filter.byPornType = function(pornType) {
+			var entries = [];
+			if (porn == null) {
+				return entries;
+			}
+			for (var i = 0; i < porn.length; i++) {
+				var entry = porn[i];
+				if (entry.pornType == pornType) {
+					entries.push(entry);
+				}
+			}
+			return entries;
+		}
+
+		filter.getClips = function() {
+			return filter.byPornType(PORN_TYPE_CLIP);
+		}
+
+		filter.getFullMovies = function() {
+			return filter.byPornType(PORN_TYPE_FULL_MOVIE);
+		}
+
+		filter.getImageSets = function() {
+			return filter.byPornType(PORN_TYPE_PHOTOS);
+		}
+
+		filter.byDownloadType = function(downloadType) {
+			var entries = [];
+			if (porn == null) {
+				return entries;
+			}
+			for (var i = 0; i < porn.length; i++) {
+				var entry = porn[i];
+				if (entry.downloads == null || entry.downloads.length == 0) {
+					continue;
+				}
+				if (entry.downloads[0].downloadType == downloadType) {
+					entries.push(entry);
+				}
+			}
+			return entries;
+		}
+
+		filter.getFiles = function() {
+			return filter.byDownloadType(DOWNLOAD_TYPE_FILE);
+		}
+
+		filter.getStreams = function() {
+			return filter.byDownloadType(DOWNLOAD_TYPE_STREAM);
+		}
+
+		filter.getTorrents = function() {
+			return filter.byDownloadType(DOWNLOAD_TYPE_TORRENT);
+		}
+
+		return filter;
 	}
 
 	/*
