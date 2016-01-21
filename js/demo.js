@@ -59,7 +59,8 @@ function requestSearchResult(query) {
     var request = jsonPorn.searchByQuery(query)
         .setCount(10) // limit to 10 entries per type (actor, genre, producer, ...)
         .fillCount(true) // fill with results that don't directly match the query
-        .advanced(true); // deeper query, including actor nicknames, porn downloads, ...
+        .includeDownloads(false) // no need for links, save datastore ops
+        .advanced(true); // deeper query, including actor nicknames
     
     // send the request and use the returned promise
     request.send().then(function(data) {
@@ -121,7 +122,7 @@ function renderActors(actors) {
 }
 
 function renderPorn(porn) {
-    $("#porn-entries").empty();
+    $("#download-type-all").empty();
     var count = 0;
     for (var i = 0; i < porn.length && count < 6; i++) {
         try {
@@ -135,7 +136,7 @@ function renderPorn(porn) {
             card.renderIn(cardWrapper);
 
             // add the wrapper to the porn container
-            $("#porn-entries").append(cardWrapper);
+            $("#download-type-all").append(cardWrapper);
             count++;
         } catch (ex) {
             console.log("Unable to render porn");
